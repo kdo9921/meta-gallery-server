@@ -2,14 +2,16 @@ const path = require("path");
 const express = require('express');
 const multer = require('multer')
 const app = express();
+app.use(express.static('public'));
+
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './images')
+    cb(null, 'public/images')
   },
   filename: function (req, file, cb) {
     console.log(req.body.order)
-    cb(null, req.body.order + path.extname(file.originalname)) /
+    cb(null, req.body.order + path.extname(file.originalname)) 
   }
 })
 
