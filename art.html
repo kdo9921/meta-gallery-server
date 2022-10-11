@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>그림 관리</title>
+</head>
+<body>
+    <h1>그림 관리 페이지</h1>
+
+    <form method="post" enctype="multipart/form-data" action="/upload">
+        <table>
+            <tr>
+                <td><label>순서</label></td>
+                <td><input type="number" name="order"></td>
+            </tr>
+            <tr>
+                <td><label>파일</label></td>
+                <td><input type="file" name="image"></td>
+            </tr>
+        </table>
+        <input type="submit" value="업로드" name="submit">
+    </form>
+</body>
+</html>

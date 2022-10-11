@@ -1,0 +1,23 @@
+{
+  "name": "meta-gallery-server",
+  "version": "1.0.0",
+  "description": "metaverse gallert server",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kdo9921/meta-gallery-server.git"
+  },
+  "author": "darae",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/kdo9921/meta-gallery-server/issues"
+  },
+  "homepage": "https://github.com/kdo9921/meta-gallery-server#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "multer": "^1.4.5-lts.1"
+  }
+}
