@@ -71,8 +71,7 @@ app.post('/show', (req, res) => {
 
 app.get('/data', function (req, res) {
   const result = {
-    art: db.get('art').value(),
-    light: db.get('light').value()
+    art: db.get('art').value()
   };
   res.send(result);
 });
