@@ -1,26 +1,80 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>그림 관리</title>
+    <style>
+        .preview {
+            width: 200px;
+            height: auto;
+            display: none;
+        }
+    </style>
+    <script>
+        var data;
+        var preview = document.getElementsByClassName("preview");
+        var check = document.getElementsByClassName("use-img");
+        async function load() {
+            var response = await fetch('./data')
+            data = await response.json();
+        }
+        load().then(function () {
+            console.log(data);
+            for (var i = 0; i < data.art.length; i++) {
+                preview[i].src = "./images/" + data.art[i].url;
+                preview[i].style.display = "block";
+                check[i].checked = data.art[i].show
+            }
+
+        })
+
+        function show(idx) {
+            fetch("./show", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    idx: idx,
+                    show: check[idx-1].checked
+                }),
+            }).then((response) => console.log(response));
+        }
+    </script>
 </head>
+
 <body>
     <h1>그림 관리 페이지</h1>
-
+    <h2>이미지 업로드</h2>
+    <h3>1번 그림</h3>
+    <img class="preview">
     <form method="post" enctype="multipart/form-data" action="/upload">
-        <table>
-            <tr>
-                <td><label>순서</label></td>
-                <td><input type="number" name="order"></td>
-            </tr>
-            <tr>
-                <td><label>파일</label></td>
-                <td><input type="file" name="image"></td>
-            </tr>
-        </table>
+        <input type="hidden" name="order" value="1">
+        <input type="file" name="image">
         <input type="submit" value="업로드" name="submit">
     </form>
+    <h3>2번 그림</h3>
+    <img class="preview">
+    <form method="post" enctype="multipart/form-data" action="/upload">
+        <input type="hidden" name="order" value="2">
+        <input type="file" name="image">
+        <input type="submit" value="업로드" name="submit">
+    </form>
+    <h3>3번 그림</h3>
+    <img class="preview">
+    <form method="post" enctype="multipart/form-data" action="/upload">
+        <input type="hidden" name="order" value="3">
+        <input type="file" name="image">
+        <input type="submit" value="업로드" name="submit">
+    </form>
+
+    <h2>이미지 사용 여부</h2>
+    <p>1번 <input type="checkbox" class="use-img" onchange="show(1)"></p>
+    <p>2번 <input type="checkbox" class="use-img" onchange="show(2)"></p>
+    <p>3번 <input type="checkbox" class="use-img" onchange="show(3)"></p>
 </body>
+
 </html>
