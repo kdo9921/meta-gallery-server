@@ -22,15 +22,6 @@ function show(idx) {
 
 
 window.onload = function() {
-    load().then(function () {
-        console.log(data);
-        for (var i = 0; i < data.art.length; i++) {
-            preview[i].src = "./images/" + data.art[i].url;
-            preview[i].style.visibility = "visible";
-            check[i].checked = data.art[i].show
-        }
-    
-    })
 
     var flexbox = document.getElementsByClassName("flexbox")[0];
 
@@ -51,5 +42,15 @@ window.onload = function() {
     </div>
         `
     }
-    flexbox.innerHTML = flexStr
+    flexbox.innerHTML = flexStr;
+
+    load().then(function () {
+        console.log(data);
+        for (var i = 0; i < data.art.length; i++) {
+            preview[data.art[i].idx-1].src = "./images/" + data.art[i].url;
+            preview[data.art[i].idx-1].style.visibility = "visible";
+            check[data.art[i].idx-1].checked = data.art[i].show
+        }
+    
+    })
 }
