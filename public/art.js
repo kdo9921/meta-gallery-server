@@ -1,6 +1,7 @@
 var data;
 var preview = document.getElementsByClassName("preview");
 var check = document.getElementsByClassName("use-img");
+
 async function load() {
     var response = await fetch('./data')
     data = await response.json();
@@ -45,12 +46,20 @@ window.onload = function() {
     flexbox.innerHTML = flexStr;
 
     load().then(function () {
+        var light_color = document.getElementById("light_color");
+        var light_range = document.getElementById("light_range");
+        var light_angle = document.getElementById("light_angle");
+
         console.log(data);
         for (var i = 0; i < data.art.length; i++) {
             preview[data.art[i].idx-1].src = "./images/" + data.art[i].url;
             preview[data.art[i].idx-1].style.visibility = "visible";
             check[data.art[i].idx-1].checked = data.art[i].show
         }
+        var temp = data.light[0].color;
+        light_color.value = temp;
+        light_range.value = data.light[0].range;
+        light_angle.value = data.light[0].angle;
     
     })
 }

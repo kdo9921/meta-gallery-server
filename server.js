@@ -8,11 +8,12 @@ var fs = require('fs');
 const app = express();
 app.use(express.json());
 app.use(express.static('public'));
+app.use(express.urlencoded({ extended: false }));
 
 const adapter = new FileSync('db.json');
 const db = low(adapter);
 
-db.defaults({ art:[], light: {} }).write()
+db.defaults({ art:[], light: [] }).write()
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -51,14 +52,23 @@ app.listen(8080, function () {
 });
 
 app.get('/', function (req, res) {
+  if (db.get('light').filter({idx: 0}).value().length == 0) {
+    db.get('light').push({idx:0, color : "#ffffff" ,range : 12, angle : 165}).write();
+  }
   res.sendFile(__dirname + '/index.html');
-});
-app.get('/art', function (req, res) {
-  res.sendFile(__dirname + '/art.html');
 });
 
 app.post('/upload', upload.single('image'), (req, res) => {
-  res.sendFile(__dirname + '/art.html');
+  res.sendFile(__dirname + '/index.html');
+})
+app.post('/light', (req, res) => {
+  console.log(req.body.light_color);
+
+  db.get('light')
+  .find({ idx:0 })
+  .assign({color : req.body.light_color ,range : Number(req.body.light_range), angle : Number(req.body.light_angle)})
+  .write();
+  res.sendFile(__dirname + '/index.html');
 })
 
 app.post('/show', (req, res) => {
@@ -71,7 +81,8 @@ app.post('/show', (req, res) => {
 
 app.get('/data', function (req, res) {
   const result = {
-    art: db.get('art').value()
+    art: db.get('art').value(),
+    light: db.get('light').value()
   };
   res.send(result);
 });
