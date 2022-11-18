@@ -25,7 +25,8 @@ var storage = multer.diskStorage({
       db.get('art').push({
         idx: Number(req.body.order),
         url: req.body.order + path.extname(file.originalname),
-        show : true
+        show : true,
+        frame : false
       }).write();
     } else {
       db.get('art')
@@ -77,7 +78,12 @@ app.post('/show', (req, res) => {
       .assign({ show: req.body.show})
       .write()
 })
-
+app.post('/frame', (req, res) => {
+  db.get('art')
+      .find({ idx: Number(req.body.idx) })
+      .assign({ frame: req.body.frame})
+      .write()
+})
 
 app.get('/data', function (req, res) {
   const result = {

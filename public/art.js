@@ -1,6 +1,7 @@
 var data;
 var preview = document.getElementsByClassName("preview");
-var check = document.getElementsByClassName("use-img");
+var imgcheck = document.getElementsByClassName("use-img");
+var framecheck = document.getElementsByClassName("use-frame");
 
 async function load() {
     var response = await fetch('./data')
@@ -15,7 +16,19 @@ function show(idx) {
         },
         body: JSON.stringify({
             idx: idx,
-            show: check[idx - 1].checked
+            show: imgcheck[idx - 1].checked
+        }),
+    }).then((response) => console.log(response));
+}
+function frame(idx) {
+    fetch("./frame", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            idx: idx,
+            frame: framecheck[idx - 1].checked
         }),
     }).then((response) => console.log(response));
 }
@@ -38,6 +51,7 @@ window.onload = function() {
                 <input type="submit" value="업로드" name="submit">
             </form>
             <p>이미지 사용 여부 : <input type="checkbox" class="use-img" onchange="show(${i})"></p>
+            <p>액자 사용 여부 : <input type="checkbox" class="use-frame" onchange="frame(${i})"></p>
         </div>
         <img class="preview">
     </div>
@@ -54,7 +68,8 @@ window.onload = function() {
         for (var i = 0; i < data.art.length; i++) {
             preview[data.art[i].idx-1].src = "./images/" + data.art[i].url;
             preview[data.art[i].idx-1].style.visibility = "visible";
-            check[data.art[i].idx-1].checked = data.art[i].show
+            imgcheck[data.art[i].idx-1].checked = data.art[i].show;
+            framecheck[data.art[i].idx-1].checked = data.art[i].frame;
         }
         var temp = data.light[0].color;
         light_color.value = temp;
