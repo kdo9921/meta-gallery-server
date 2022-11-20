@@ -37,7 +37,7 @@ function frame(idx) {
 
 window.onload = function() {
 
-    var flexbox = document.getElementsByClassName("flexbox")[0];
+    var flexbox = document.getElementsByClassName("picture")[0];
 
     var flexStr = "";
     for (var i = 1; i <= 35; i++) {
@@ -47,11 +47,11 @@ window.onload = function() {
             <h3>${i}번 그림</h3>
             <form method="post" enctype="multipart/form-data" action="/upload">
                 <input type="hidden" name="order" value="${i}">
-                <input type="file" name="image">
-                <input type="submit" value="업로드" name="submit">
+                <p><input type="file" name="image"></p>
+                <p>이미지 사용 여부 : <input type="checkbox" class="use-img" onchange="show(${i})"></p>
+                <p>액자 사용 여부 : <input type="checkbox" class="use-frame" onchange="frame(${i})"></p>
+                <p><input type="submit" value="업로드" name="submit"></p>
             </form>
-            <p>이미지 사용 여부 : <input type="checkbox" class="use-img" onchange="show(${i})"></p>
-            <p>액자 사용 여부 : <input type="checkbox" class="use-frame" onchange="frame(${i})"></p>
         </div>
         <img class="preview">
     </div>

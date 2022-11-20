@@ -11,20 +11,33 @@
 </head>
 
 <body>
+    <nav>
+        <h3>메타버스 전시관</h3>
+    </nav>
     <div class="container">
-        <img src="./gall.png" id="gall">
         <div class="setting">
+            <div class="box">
+                <h1>조명 관리</h1>
+                <form method="post" action="/light">
+                    <p>색상 : <input type="color" id="light_color" name="light_color"></p>
+                    <P>밝기 : <input type="range" min="4" max="16" value="8" class="slider" id="light_range"
+                            name="light_range"></P>
+                    <p>각도 : <input type="range" min="60" max="179" value="165" class="slider" id="light_angle"
+                            name="light_angle"></p>
+                    <input type="submit" value="적용" name="submit">
+                </form>
+            </div>
+            <div class="box sticky">
+                <h1>전시관 구조</h1>
+                <img src="./gall.png" id="gall">
+            </div>
+        </div>
+        <div class="box">
             <h1>그림 관리</h1>
-            <div class="flexbox">
+            <div class="picture">
 
             </div>
-            <h1>조명 관리</h1>
-            <form method="post" action="/light">
-                <p>색상 : <input type="color" id="light_color" name="light_color"></p>
-                <P>밝기 : <input type="range" min="4" max="16" value="8" class="slider" id="light_range" name="light_range"></P>
-                <p>각도 : <input type="range" min="60" max="179" value="165" class="slider" id="light_angle" name="light_angle"></p>
-                <input type="submit" value="적용" name="submit">
-            </form>
+
         </div>
     </div>
 </body>
