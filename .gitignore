@@ -1,4 +1,5 @@
 .DS_Store
 public/images/*
+public/bgm/*
 db.json
 db backup.json

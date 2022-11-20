@@ -2,6 +2,7 @@ var data;
 var preview = document.getElementsByClassName("preview");
 var imgcheck = document.getElementsByClassName("use-img");
 var framecheck = document.getElementsByClassName("use-frame");
+var bgmcheck = document.getElementsByClassName("use-bgm");
 
 async function load() {
     var response = await fetch('./data')
@@ -32,7 +33,18 @@ function frame(idx) {
         }),
     }).then((response) => console.log(response));
 }
-
+function bgm() {
+    fetch("./bgmplay", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            idx: 0,
+            play: bgmcheck[0].checked
+        }),
+    }).then((response) => console.log(response));
+}
 
 
 window.onload = function() {
@@ -63,6 +75,7 @@ window.onload = function() {
         var light_color = document.getElementById("light_color");
         var light_range = document.getElementById("light_range");
         var light_angle = document.getElementById("light_angle");
+        var bgm_current = document.getElementById("bgm_current");
 
         console.log(data);
         for (var i = 0; i < data.art.length; i++) {
@@ -75,6 +88,7 @@ window.onload = function() {
         light_color.value = temp;
         light_range.value = data.light[0].range;
         light_angle.value = data.light[0].angle;
-    
+        bgm_current.innerHTML = data.bgm[0].title;
+        bgmcheck[0].checked = data.bgm[0].play;
     })
 }

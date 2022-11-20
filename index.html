@@ -12,7 +12,7 @@
 
 <body>
     <nav>
-        <h3>메타버스 전시관</h3>
+        <h3>메타버스 전시관 관리자 페이지</h3>
     </nav>
     <div class="container">
         <div class="setting">
@@ -25,6 +25,16 @@
                     <p>각도 : <input type="range" min="60" max="179" value="165" class="slider" id="light_angle"
                             name="light_angle"></p>
                     <input type="submit" value="적용" name="submit">
+                </form>
+            </div>
+            <div class="box">
+                <h1>음악 관리</h1>
+                <p>현재 재생중 : <span id="bgm_current">없음</span></p>
+                <form enctype="multipart/form-data" method="post" action="/bgm">
+                    <input type="hidden" name="order" value="0">
+                    <p><input type="file" name="audio"></p>
+                    <p>음악 사용 여부 : <input type="checkbox" class="use-bgm" onchange="bgm()"></p>
+                    <p><input type="submit" value="업로드" name="submit"></p>
                 </form>
             </div>
             <div class="box sticky">
