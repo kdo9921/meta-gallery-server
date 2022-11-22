@@ -3,10 +3,53 @@ var preview = document.getElementsByClassName("preview");
 var imgcheck = document.getElementsByClassName("use-img");
 var framecheck = document.getElementsByClassName("use-frame");
 var bgmcheck = document.getElementsByClassName("use-bgm");
+var explancheck = document.getElementsByClassName("use-explan");
+var infoContainer = document.getElementsByClassName("info_container");
 
 async function load() {
     var response = await fetch('./data')
     data = await response.json();
+}
+
+function use_info(idx) {
+    fetch("./use_info", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            idx: idx,
+            explan: explancheck[idx-1].checked
+        }),
+    }).then((response) => console.log(response));
+}
+function hide_info() {
+    var info_idx = document.getElementById("info_idx");
+    infoContainer[0].style.display = "none";
+}
+function showExplan(idx) {
+    var info_idx = document.getElementById("info_idx");
+    infoContainer[0].style.display = "flex";
+    document.getElementById("info_title").value = data.art[idx-1].title;
+    document.getElementById("info_artist").value = data.art[idx-1].artist;
+    document.getElementById("info_explan").value = data.art[idx-1].info;
+    info_idx.value = idx;
+}
+function setInfo() {
+    var info_idx = document.getElementById("info_idx");
+    fetch("./info", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            idx: info_idx.value,
+            title: document.getElementById("info_title").value,
+            artist: document.getElementById("info_artist").value,
+            info: document.getElementById("info_explan").value
+        }),
+    }).then((response) => console.log(response));
+    infoContainer[0].style.display = "none";
 }
 
 function show(idx) {
@@ -21,6 +64,7 @@ function show(idx) {
         }),
     }).then((response) => console.log(response));
 }
+
 function frame(idx) {
     fetch("./frame", {
         method: "POST",
@@ -33,6 +77,7 @@ function frame(idx) {
         }),
     }).then((response) => console.log(response));
 }
+
 function bgm() {
     fetch("./bgmplay", {
         method: "POST",
@@ -47,7 +92,7 @@ function bgm() {
 }
 
 
-window.onload = function() {
+window.onload = function () {
 
     var flexbox = document.getElementsByClassName("picture")[0];
 
@@ -55,18 +100,21 @@ window.onload = function() {
     for (var i = 1; i <= 35; i++) {
         flexStr += `
         <div class="item">
-        <div class="info">
             <h3>${i}번 그림</h3>
-            <form method="post" enctype="multipart/form-data" action="/upload">
-                <input type="hidden" name="order" value="${i}">
-                <p><input type="file" name="image"></p>
-                <p>이미지 사용 여부 : <input type="checkbox" class="use-img" onchange="show(${i})"></p>
-                <p>액자 사용 여부 : <input type="checkbox" class="use-frame" onchange="frame(${i})"></p>
-                <p><input type="submit" value="업로드" name="submit"></p>
-            </form>
+            <div class="art">
+                <div class="info">
+                    <form method="post" enctype="multipart/form-data" action="/upload">
+                        <input type="hidden" name="order" value="${i}">
+                        <p><input type="file" name="image"></p>
+                        <p>이미지 사용 : <input type="checkbox" class="use-img" onchange="show(${i})"></p>
+                        <p>액자 사용 : <input type="checkbox" class="use-frame" onchange="frame(${i})"></p>
+                        <p>설명 사용 : <input type="checkbox" class="use-explan" onchange="use_info(${i})"> <input type="button" value="설명 설정" onclick="showExplan(${i})"></p>
+                        <input class="button" type="submit" value="이미지 업로드" name="submit">
+                    </form>
+                </div>
+                <div class="preview"></div>
+            </div>
         </div>
-        <img class="preview">
-    </div>
         `
     }
     flexbox.innerHTML = flexStr;
@@ -79,10 +127,11 @@ window.onload = function() {
 
         console.log(data);
         for (var i = 0; i < data.art.length; i++) {
-            preview[data.art[i].idx-1].src = "./images/" + data.art[i].url;
-            preview[data.art[i].idx-1].style.visibility = "visible";
-            imgcheck[data.art[i].idx-1].checked = data.art[i].show;
-            framecheck[data.art[i].idx-1].checked = data.art[i].frame;
+            preview[data.art[i].idx - 1].style.backgroundImage = "url('./images/" + data.art[i].url + "')";
+            preview[data.art[i].idx - 1].style.visibility = "visible";
+            imgcheck[data.art[i].idx - 1].checked = data.art[i].show;
+            explancheck[data.art[i].idx - 1].checked = data.art[i].explan;
+            framecheck[data.art[i].idx - 1].checked = data.art[i].frame;
         }
         var temp = data.light[0].color;
         light_color.value = temp;

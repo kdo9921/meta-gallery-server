@@ -24,7 +24,7 @@
                             name="light_range"></P>
                     <p>각도 : <input type="range" min="60" max="179" value="165" class="slider" id="light_angle"
                             name="light_angle"></p>
-                    <input type="submit" value="적용" name="submit">
+                    <input class="button" type="submit" value="조명 적용" name="submit">
                 </form>
             </div>
             <div class="box">
@@ -34,7 +34,7 @@
                     <input type="hidden" name="order" value="0">
                     <p><input type="file" name="audio"></p>
                     <p>음악 사용 여부 : <input type="checkbox" class="use-bgm" onchange="bgm()"></p>
-                    <p><input type="submit" value="업로드" name="submit"></p>
+                    <p><input class="button" type="submit" value="음악 업로드" name="submit"></p>
                 </form>
             </div>
             <div class="box sticky">
@@ -45,9 +45,20 @@
         <div class="box">
             <h1>그림 관리</h1>
             <div class="picture">
-
             </div>
 
+        </div>
+    </div>
+    <div class="info_container">
+        <div class="info_box box">
+            <h1>설명 추가</h1>
+            <input type="hidden" id="info_idx" name="order" value="0">
+            <p>제목 <input type="text" id="info_title" name="title"></p>
+            <p>작가 <input type="text" id="info_artist" name="artist"></p>
+            <p>설명</p>
+            <textarea rows="5" id="info_explan" name="explan"></textarea>
+            <input class="button" type="submit" value="설명 적용" onclick="setInfo()" name="submit">
+            <button class="button" style="background-color: red; color: white" onclick="hide_info()">취소</button>
         </div>
     </div>
 </body>
