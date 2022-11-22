@@ -60,6 +60,7 @@ function setInfo() {
         }),
     }).then((response) => console.log(response));
     infoContainer[0].style.display = "none";
+    load();
 }
 
 function show(idx) {
