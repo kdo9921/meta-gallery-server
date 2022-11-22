@@ -19,23 +19,32 @@ function use_info(idx) {
         },
         body: JSON.stringify({
             idx: idx,
-            explan: explancheck[idx-1].checked
+            explan: explancheck[idx - 1].checked
         }),
     }).then((response) => console.log(response));
 }
+
 function hide_info() {
     var info_idx = document.getElementById("info_idx");
     infoContainer[0].style.display = "none";
 }
+
 function showExplan(idx) {
     var info_idx = document.getElementById("info_idx");
-    infoContainer[0].style.display = "flex";
     var temp = data.art.find(v => v.idx === idx);
-    document.getElementById("info_title").value = temp.title;
-    document.getElementById("info_artist").value = temp.artist;
-    document.getElementById("info_explan").value = temp.info;
+    if (temp) {
+        document.getElementById("info_title").value = temp.title;
+        document.getElementById("info_artist").value = temp.artist;
+        document.getElementById("info_explan").value = temp.info;
+    } else {
+        document.getElementById("info_title").value = "";
+        document.getElementById("info_artist").value = "";
+        document.getElementById("info_explan").value = "";
+    }
     info_idx.value = idx;
+    infoContainer[0].style.display = "flex";
 }
+
 function setInfo() {
     var info_idx = document.getElementById("info_idx");
     fetch("./info", {
