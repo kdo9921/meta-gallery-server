@@ -30,9 +30,10 @@ function hide_info() {
 function showExplan(idx) {
     var info_idx = document.getElementById("info_idx");
     infoContainer[0].style.display = "flex";
-    document.getElementById("info_title").value = data.art[idx-1].title;
-    document.getElementById("info_artist").value = data.art[idx-1].artist;
-    document.getElementById("info_explan").value = data.art[idx-1].info;
+    var temp = data.art.find(v => v.idx === idx);
+    document.getElementById("info_title").value = temp.title;
+    document.getElementById("info_artist").value = temp.artist;
+    document.getElementById("info_explan").value = temp.info;
     info_idx.value = idx;
 }
 function setInfo() {
