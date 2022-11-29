@@ -7,7 +7,7 @@
 조명과 음악 설정, 그림 변경, 그림 설명 추가 등등을 쉽게 변경할 수 있음
 
 클라이언트는 여기 참고 => [meta-gallery-server
-](https://github.com/kdo9921/meta-gallery-server)
+](https://github.com/kdo9921/meta-gallery-client)
 
 ![meta-gellary](https://user-images.githubusercontent.com/21959564/204454378-4238eb76-8293-4ba8-90de-ca7b85e9b629.jpg)
 
